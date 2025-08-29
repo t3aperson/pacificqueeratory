@@ -1,0 +1,28 @@
+---
+import { Newspaper } from "@lucide/astro";
+import { Bluesky, Github } from "simple-icons-astro";
+---
+
+<div class="navbar bg-base-100 shadow-sm">
+  <div class="flex-1">
+    <a class="group btn btn-soft text-xl" href="/"
+      ><p class="hubot font-bold">
+        Auzzie.<span
+          class="from-secondary to-primary inline-block -skew-y-6 bg-gradient-to-br bg-clip-text text-transparent transition-all duration-300 group-hover:skew-y-0"
+          >space</span
+        >
+      </p></a
+    >
+  </div>
+  <div class="flex flex-none gap-2">
+    <a class="btn btn-square" href="/blog">
+      <Newspaper />
+    </a>
+    <a href="https://bsky.app/profile/auzzie.space" class="btn btn-square">
+      <Bluesky />
+    </a>
+    <a href="https://github.com/notaussie" class="btn btn-square">
+      <Github />
+    </a>
+  </div>
+</div>
