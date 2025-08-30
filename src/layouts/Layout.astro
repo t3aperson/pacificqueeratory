@@ -14,7 +14,8 @@ import "../styles/global.css";
     <meta name="generator" content={Astro.generator} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="me" href="https://mastodon.social/@notaussie" />
-    <title>{title || "Auzzie's Space"}</title>
+    <title>{title} - Auzzie.space</title>
+    <slot name="head" />
   </head>
   <body>
     <div class="from-base-200 to-base-300 min-h-screen bg-gradient-to-br">

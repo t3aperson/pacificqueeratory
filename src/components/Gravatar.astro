@@ -1,0 +1,15 @@
+---
+import { createHash } from "crypto";
+
+const { email, alt, size, class: className } = Astro.props;
+
+const hash = createHash("sha256")
+  .update(email.toLowerCase().trim())
+  .digest("hex");
+---
+
+<img
+  src={`https://www.gravatar.com/avatar/${hash}?s=${size || "256"}&d=identicon`}
+  alt={alt || "User's Gravatar"}
+  class={className}
+/>

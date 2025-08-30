@@ -1,0 +1,67 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Gravatar from "../../components/Gravatar.astro";
+
+const post = await getCollection("blog");
+const authors = await getCollection("author");
+
+const posts = post.sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<Layout title="Posts">
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="h1 mb-4 font-bold">Blog Posts</h1>
+    <p class="mb-2">
+      Find the latest posts from me (and some friends) about technology,
+      programming, and more!
+    </p>
+    <a href="/authors" class="btn btn-soft mb-4">View authors</a>
+
+    <div class="grid max-h-[70vh] gap-6 overflow-y-auto">
+      {
+        posts.map((post) => (
+          <a href={`/posts/${post.id.replace(/\.[^.]*$/, "")}`}>
+            <div class="card bg-base-100 shadow-xl md:w-5/6">
+              <div class="card-body">
+                <p>{post.data.date.toLocaleDateString("en-AU")}</p>
+                <h2 class="card-title">{post.data.title}</h2>
+                <p>{post.data.description}</p>
+                <div class="mt-2 flex flex-wrap gap-1">
+                  {post.data.tags?.map((tag: string) => (
+                    <span class="badge badge-ghost badge-sm">{tag}</span>
+                  ))}
+                </div>
+                <div class="mt-2 flex items-center gap-2">
+                  {post.data.authors?.map((username: string) => {
+                    const author = authors.find(
+                      (a) => a.id.replace(/\.[^.]*$/, "") === username,
+                    );
+                    return author ? (
+                      <a
+                        class="flex items-center gap-2"
+                        href={`/author/${author.id.replace(/\.[^.]*$/, "")}`}
+                      >
+                        <div class="avatar">
+                          <div class="w-8 rounded-full">
+                            <Gravatar
+                              email={author.data.email}
+                              alt={`${author.data.display_name} avatar`}
+                            />
+                          </div>
+                        </div>
+                        <span class="text-sm">{author.data.display_name}</span>
+                      </a>
+                    ) : null;
+                  })}
+                </div>
+              </div>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</Layout>
