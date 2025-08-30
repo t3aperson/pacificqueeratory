@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import Gravatar from "../components/Gravatar.astro";
+import BlogSEO from "../components/seo/BlogSEO.astro";
 import Layout from "./Layout.astro";
 
 type Props = CollectionEntry<"blog">["data"];
@@ -26,6 +27,7 @@ const date: Date = new Date(_date);
 ---
 
 <Layout title={title}>
+  <!-- Metadata -->
   {
     (() => {
       if (!_authors || _authors.length === 0) return null;
@@ -43,7 +45,9 @@ const date: Date = new Date(_date);
       ) : null;
     })()
   }
+  <BlogSEO title={title} description={description} date={date} slot="head" />
 
+  <!-- Content -->
   <article class="mx-auto max-w-4xl px-4 py-8">
     <header class="mb-8">
       <div

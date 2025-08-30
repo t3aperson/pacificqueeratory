@@ -1,0 +1,23 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  date: Date;
+}
+
+const { title, description, date } = Astro.props;
+---
+
+<!-- HTML -->
+<meta name="description" content={description} />
+
+<!-- Open Graph -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="article:published_time" content={date.toISOString()} />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />

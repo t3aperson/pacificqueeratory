@@ -4,6 +4,7 @@ import { Globe } from "@lucide/astro";
 import { Github, Bluesky, Mastodon } from "simple-icons-astro";
 import Layout from "../../layouts/Layout.astro";
 import Gravatar from "../../components/Gravatar.astro";
+import PageSEO from "../../components/seo/PageSEO.astro";
 
 export async function getStaticPaths() {
   const authors = await getCollection("author");
@@ -35,6 +36,13 @@ function getMastodonInstance() {
 ---
 
 <Layout title={author.data.display_name}>
+  <PageSEO
+    title={author.data.display_name}
+    description={author.data.description}
+    type="profile"
+    slot="head"
+  />
+
   <div class="container mx-auto px-4 py-8">
     <div class="mb-8 flex flex-col gap-6 md:flex-row">
       <div class="flex-shrink-0">

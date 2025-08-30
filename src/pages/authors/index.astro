@@ -2,11 +2,18 @@
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Gravatar from "../../components/Gravatar.astro";
+import PageSEO from "../../components/seo/PageSEO.astro";
 
 const authors = await getCollection("author");
 ---
 
 <Layout title="Authors">
+  <PageSEO
+    title="Authors"
+    description="List of authors on Auzzie.space"
+    slot="head"
+  />
+
   <main class="container mx-auto px-4 py-8">
     <h1 class="mb-8 text-left text-4xl font-bold">Authors</h1>
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

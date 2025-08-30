@@ -1,9 +1,17 @@
 ---
 import { Rabbit, Brain, BookCopy } from "@lucide/astro";
 import Layout from "../layouts/Layout.astro";
+import PageSEO from "../components/seo/PageSEO.astro";
 ---
 
 <Layout title="Home" class="p-5">
+  <PageSEO
+    title="Home"
+    description="Emily's personal portfolio and blog!"
+    type="profile"
+    slot="head"
+  />
+
   <div class="pt-5 pl-5">
     <h1 class="h1 pb-4">Hiya! <Rabbit class="inline" /></h1>
 

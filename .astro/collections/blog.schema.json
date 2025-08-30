@@ -42,7 +42,12 @@
           "type": "string"
         }
       },
-      "required": ["title", "description", "date", "authors"],
+      "required": [
+        "title",
+        "description",
+        "date",
+        "authors"
+      ],
       "additionalProperties": false
     }
   },

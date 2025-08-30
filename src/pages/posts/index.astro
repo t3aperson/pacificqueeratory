@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Gravatar from "../../components/Gravatar.astro";
+import PageSEO from "../../components/seo/PageSEO.astro";
 
 const post = await getCollection("blog");
 const authors = await getCollection("author");
@@ -12,6 +13,12 @@ const posts = post.sort(
 ---
 
 <Layout title="Posts">
+  <PageSEO
+    title="Blog Posts"
+    description="Find the latest posts from me (and some friends) about technology, programming, and more!"
+    slot="head"
+  />
+
   <div class="container mx-auto px-4 py-8">
     <h1 class="h1 mb-4 font-bold">Blog Posts</h1>
     <p class="mb-2">

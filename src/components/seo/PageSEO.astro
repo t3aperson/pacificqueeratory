@@ -1,0 +1,26 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  type?: string;
+}
+
+const { title, description, type } = Astro.props;
+---
+
+<!-- HTML -->
+<meta name="description" content={description} />
+
+<!-- Canonical URL -->
+<link rel="canonical" href={Astro.url} />
+
+<!-- Open Graph -->
+<meta property="og:type" content={type || "website"} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={Astro.url} />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
