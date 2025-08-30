@@ -1,5 +1,6 @@
 ---
 import { type CollectionEntry, getCollection } from "astro:content";
+import { Globe } from "@lucide/astro";
 import { Github, Bluesky, Mastodon } from "simple-icons-astro";
 import Layout from "../../layouts/Layout.astro";
 import Gravatar from "../../components/Gravatar.astro";
@@ -54,20 +55,38 @@ const { author, posts } = Astro.props;
             <div class="flex gap-3">
               {author.data.socials.bluesky && (
                 <a
-                  href={author.data.socials.bluesky}
+                  href={`https://bsky.app/profile/${author.data.socials.bluesky}`}
                   class="btn btn-outline btn-sm gap-2"
                 >
                   <Bluesky class="inline h-4 w-4" />
                   Bluesky
                 </a>
               )}
+              {author.data.socials.mastodon && (
+                <a
+                  href={`https://mastodon.social/${author.data.socials.mastodon}`}
+                  class="btn btn-outline btn-sm gap-2"
+                >
+                  <Mastodon class="inline h-4 w-4" />
+                  Mastodon
+                </a>
+              )}
               {author.data.socials.github && (
                 <a
-                  href={author.data.socials.github}
+                  href={`https://github.com/${author.data.socials.github}`}
                   class="btn btn-outline btn-sm gap-2"
                 >
                   <Github class="inline h-4 w-4" />
                   GitHub
+                </a>
+              )}
+              {author.data.socials.website && (
+                <a
+                  href={author.data.socials.website}
+                  class="btn btn-outline btn-sm gap-2"
+                >
+                  <Globe class="inline h-4 w-4" />
+                  Website
                 </a>
               )}
             </div>
