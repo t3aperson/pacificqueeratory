@@ -14,7 +14,7 @@ import "../styles/global.css";
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={Astro.site} />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta property="og:url" content={Astro.url} slot="head" />
+    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site).href} slot="head" />
     <meta property="robots" content="index, follow" />
     <title>{title} - Auzzie.space</title>
     <link rel="me" href="https://mastodon.social/@notaussie" />
