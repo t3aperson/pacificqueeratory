@@ -1,7 +1,7 @@
 import { getCollection } from "astro:content";
 import rss from "@astrojs/rss";
 
-export async function GET(context) {
+export async function GET(context: { site: string | URL }) {
   const posts = await getCollection("blog");
   return rss({
     title: "Auzzie.space - Blog",
@@ -9,7 +9,7 @@ export async function GET(context) {
     site: context.site,
     items: posts.map((post) => ({
       ...post.data,
-      link: `/blog/${post.id.replace(/\.[^.]*$/, "")}/`,
+      link: `/posts/${post.id.replace(/\.[^.]*$/, "")}/`,
     })),
   });
 }

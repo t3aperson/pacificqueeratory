@@ -1,9 +1,17 @@
 ---
 import { Rabbit, Brain, BookCopy } from "@lucide/astro";
 import Layout from "../layouts/Layout.astro";
+import PageSEO from "../components/seo/PageSEO.astro";
 ---
 
-<Layout class="p-5">
+<Layout title="Home" class="p-5">
+  <PageSEO
+    title="Home"
+    description="Emily's personal portfolio and blog!"
+    type="profile"
+    slot="head"
+  />
+
   <div class="pt-5 pl-5">
     <h1 class="h1 pb-4">Hiya! <Rabbit class="inline" /></h1>
 
@@ -15,8 +23,8 @@ import Layout from "../layouts/Layout.astro";
           href="https://www.australiantraveller.com/sa/adelaide/happiest-city-australia/"
           class="link">happiest place in Australia</a
         ></q
-      >! I've been programming since I was 12 <i class="font-light"
-        >(about {new Date().getFullYear() - 2021} years ago)</i
+      >! I've been programming since I was 13 <i class="font-light"
+        >(about {new Date().getFullYear() - 2023} years ago)</i
       > when I started building bots for Guilded, since then I've spread into developing
       websites and now even analytical software.
     </p>

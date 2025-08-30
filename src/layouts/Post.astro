@@ -1,19 +1,19 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { createHash } from "crypto";
-import { CalendarFold } from "@lucide/astro";
+import Gravatar from "../components/Gravatar.astro";
+import BlogSEO from "../components/seo/BlogSEO.astro";
 import Layout from "./Layout.astro";
 
 type Props = CollectionEntry<"blog">["data"];
+import { getCollection } from "astro:content";
 
-type Author = {
-  email: string;
-  display: string;
-};
-
-type Authors = {
-  [key: string]: Author;
-};
+const authorsCollection = await getCollection("author");
+const authors = Object.fromEntries(
+  authorsCollection.map((author) => [
+    author.id.replace(/\.[^.]*$/, ""),
+    author.data,
+  ]),
+);
 
 const {
   title,
@@ -22,57 +22,74 @@ const {
   date: _date,
   authors: _authors,
 } = Astro.props;
-const authors: Authors = _authors;
+
 const date: Date = new Date(_date);
 ---
 
-<Layout title={`Auzzie.space - ${title}`}>
+<Layout title={title}>
+  <!-- Metadata -->
+  {
+    (() => {
+      if (!_authors || _authors.length === 0) return null;
+
+      const firstAuthorWithMastodon = _authors
+        .map((authorId) => authors[authorId])
+        .find((author) => author?.socials?.mastodon);
+
+      return firstAuthorWithMastodon?.socials?.mastodon ? (
+        <meta
+          name="fediverse:creator"
+          content={firstAuthorWithMastodon.socials.mastodon}
+          slot="head"
+        />
+      ) : null;
+    })()
+  }
+  <BlogSEO title={title} description={description} date={date} slot="head" />
+
+  <!-- Content -->
   <article class="mx-auto max-w-4xl px-4 py-8">
     <header class="mb-8">
+      <div
+        class="text-base-content/60 flex flex-wrap items-center gap-4 text-sm"
+      >
+        <time class="flex items-center gap-1" datetime={date.toISOString()}>
+          {
+            date.toLocaleDateString("en-AU", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })
+          }
+        </time>
+      </div>
       <h1 class="text-base-content mb-4 text-4xl font-bold">{title}</h1>
       <p class="text-base-content/70 mb-6 text-lg">{description}</p>
 
       <div class="space-y-4">
         <div class="flex flex-wrap items-center gap-4">
           {
-            Object.entries(authors).map(([key, author]) => {
-              const emailHash = createHash("sha256")
-                .update(author.email.toLowerCase().trim())
-                .digest("hex");
-              const gravatarUrl = `https://www.gravatar.com/avatar/${emailHash}?s=256&d=identicon`;
+            _authors?.map((authorId) => {
+              const author = authors[authorId];
+              if (!author) return null;
 
               return (
-                <div class="flex items-center gap-2">
+                <a class="flex items-center gap-2" href={`/author/${authorId}`}>
                   <div class="avatar">
                     <div class="w-10 rounded-full">
-                      <img
-                        src={gravatarUrl}
-                        alt={`${author.display}'s avatar`}
+                      <Gravatar
+                        email={author.email}
+                        alt={`${author.display_name}'s avatar`}
                       />
                     </div>
                   </div>
                   <span class="text-base-content font-medium">
-                    {author.display}
+                    {author.display_name}
                   </span>
-                </div>
+                </a>
               );
             })
           }
-        </div>
-
-        <div
-          class="text-base-content/60 flex flex-wrap items-center gap-4 text-sm"
-        >
-          <time class="flex items-center gap-1" datetime={date.toISOString()}>
-            <CalendarFold class="inline" />
-            {
-              date.toLocaleDateString("en-AU", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })
-            }
-          </time>
         </div>
 
         {

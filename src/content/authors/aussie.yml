@@ -1,0 +1,11 @@
+---
+display_name: "Emily"
+description: "Emily, known as NotAussie, is an autistic developer and transit photographer from Adelaide, Australia. She has been programming since the age of 13, focusing on building bots and websites."
+pronouns: "she/they/any"
+email: "notaussie@duck.com"
+maintainer: true
+socials:
+  bluesky: "auzzie.space"
+  mastodon: "@notaussie@mastodon.social"
+  github: "notaussie"
+  website: "https://auzzie.space"

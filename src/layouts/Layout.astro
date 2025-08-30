@@ -12,9 +12,13 @@ import "../styles/global.css";
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={Astro.site} />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:url" content={Astro.url} slot="head" />
+    <meta property="robots" content="index, follow" />
+    <title>{title} - Auzzie.space</title>
     <link rel="me" href="https://mastodon.social/@notaussie" />
-    <title>{title || "Auzzie's Space"}</title>
+    <slot name="head" />
   </head>
   <body>
     <div class="from-base-200 to-base-300 min-h-screen bg-gradient-to-br">
