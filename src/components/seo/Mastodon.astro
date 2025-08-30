@@ -1,0 +1,9 @@
+---
+export interface Props {
+  handle: string;
+}
+
+const { handle } = Astro.props;
+---
+
+{handle && <meta name="fediverse:creator" content={handle} />}

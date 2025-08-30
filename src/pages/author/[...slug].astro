@@ -30,7 +30,9 @@ const { author, posts } = Astro.props;
 function getMastodonInstance() {
   if (!author.data.socials || !author.data.socials.mastodon) return null;
 
-  const [username, instance] = author.data.socials.mastodon.split("@");
+  const parts = author.data.socials.mastodon.split("@").filter(Boolean);
+  if (parts.length !== 2) return null;
+  const [username, instance] = parts;
   return { username, instance };
 }
 ---
@@ -78,19 +80,21 @@ function getMastodonInstance() {
                   Bluesky
                 </a>
               )}
-              {author.data.socials.mastodon && (() => {
-                const mastodon = getMastodonInstance();
-                if (!mastodon || !mastodon.username || !mastodon.instance) return null;
-                return (
-                  <a
-                    href={`https://${mastodon.instance}/${mastodon.username}`}
-                    class="btn btn-outline btn-sm gap-2"
-                  >
-                    <Mastodon class="inline h-4 w-4" />
-                    Mastodon
-                  </a>
-                );
-              })()}
+              {author.data.socials.mastodon &&
+                (() => {
+                  const mastodon = getMastodonInstance();
+                  if (!mastodon || !mastodon.username || !mastodon.instance)
+                    return null;
+                  return (
+                    <a
+                      href={`https://${mastodon.instance}/@${mastodon.username}`}
+                      class="btn btn-outline btn-sm gap-2"
+                    >
+                      <Mastodon class="inline h-4 w-4" />
+                      Mastodon
+                    </a>
+                  );
+                })()}
               {author.data.socials.github && (
                 <a
                   href={`https://github.com/${author.data.socials.github}`}
