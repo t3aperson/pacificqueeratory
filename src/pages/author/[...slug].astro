@@ -18,12 +18,20 @@ export async function getStaticPaths() {
     },
   }));
 }
+
 type Props = {
   author: CollectionEntry<"author">;
   posts: CollectionEntry<"blog">[];
 };
 
 const { author, posts } = Astro.props;
+
+function getMastodonInstance() {
+  if (!author.data.socials || !author.data.socials.mastodon) return null;
+
+  const [username, instance] = author.data.socials.mastodon.split("@");
+  return { username, instance };
+}
 ---
 
 <Layout title={author.data.display_name}>
